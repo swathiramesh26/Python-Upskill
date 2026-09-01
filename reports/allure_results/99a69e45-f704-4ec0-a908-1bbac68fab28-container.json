@@ -1,0 +1,1 @@
+{"uuid": "1f747276-10b9-468c-be57-caca21f91d85", "children": ["f72620b7-964a-4b1c-a7ee-f9d6b00d6ae8"], "befores": [{"name": "screenshot_helper", "status": "passed", "start": 1788250599609, "stop": 1788250599609}], "afters": [{"name": "screenshot_helper::<lambda>", "start": 1788250600197}], "start": 1788250599609, "stop": 1788250600197}

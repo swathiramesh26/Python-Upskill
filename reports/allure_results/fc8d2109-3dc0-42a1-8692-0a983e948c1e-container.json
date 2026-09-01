@@ -1,0 +1,1 @@
+{"uuid": "d8fad5d1-621d-4cc2-9188-5694128dbf28", "children": ["7cc17de8-6e27-4f4a-bb8b-997c829b2a54"], "befores": [{"name": "output_path", "status": "passed", "start": 1788163585038, "stop": 1788163585038}], "afters": [{"name": "output_path::<lambda>", "start": 1788163585072}], "start": 1788163585038, "stop": 1788163585072}

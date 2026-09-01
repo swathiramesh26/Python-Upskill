@@ -1,0 +1,3 @@
+
+Static todos: ['Shopping', 'Cleaning', 'Payments', 'Reading', 'Walking']
+[SESSION] Teardown - closing library database connection

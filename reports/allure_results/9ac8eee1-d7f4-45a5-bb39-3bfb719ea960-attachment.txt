@@ -1,0 +1,5 @@
+
+[FUNCTION] Setup - issuing a fresh book checkout (runs before EACH test)
+[TEST] Running test_return_book
+[FUNCTION] Teardown - returning the book / clearing checkout record
+[MODULE] Teardown - unloading 'Animation' catalog

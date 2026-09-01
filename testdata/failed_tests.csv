@@ -1,0 +1,6 @@
+id,name,error_message,duration_ms
+2,Logout Test,Button not found,95
+4,Checkout Test,Payment gateway timeout,210
+6,Profile Update Test,Validation error,130
+8,Notification Test,Email not sent,85
+10,API Integration Test,500 Internal Server Error,250

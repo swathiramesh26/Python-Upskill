@@ -1,0 +1,72 @@
+[
+    {
+        "id": 1,
+        "name": "Login Test",
+        "status": "pass",
+        "duration_ms": 120,
+        "error_message": ""
+    },
+    {
+        "id": 2,
+        "name": "Logout Test",
+        "status": "fail",
+        "duration_ms": 95,
+        "error_message": "Button not found"
+    },
+    {
+        "id": 3,
+        "name": "Search Test",
+        "status": "pass",
+        "duration_ms": 150,
+        "error_message": ""
+    },
+    {
+        "id": 4,
+        "name": "Checkout Test",
+        "status": "fail",
+        "duration_ms": 210,
+        "error_message": "Payment gateway timeout"
+    },
+    {
+        "id": 5,
+        "name": "Registration Test",
+        "status": "pass",
+        "duration_ms": 180,
+        "error_message": ""
+    },
+    {
+        "id": 6,
+        "name": "Profile Update Test",
+        "status": "fail",
+        "duration_ms": 130,
+        "error_message": "Validation error"
+    },
+    {
+        "id": 7,
+        "name": "Password Reset Test",
+        "status": "pass",
+        "duration_ms": 100,
+        "error_message": ""
+    },
+    {
+        "id": 8,
+        "name": "Notification Test",
+        "status": "fail",
+        "duration_ms": 85,
+        "error_message": "Email not sent"
+    },
+    {
+        "id": 9,
+        "name": "Dashboard Test",
+        "status": "pass",
+        "duration_ms": 140,
+        "error_message": ""
+    },
+    {
+        "id": 10,
+        "name": "API Integration Test",
+        "status": "fail",
+        "duration_ms": 250,
+        "error_message": "500 Internal Server Error"
+    }
+]
