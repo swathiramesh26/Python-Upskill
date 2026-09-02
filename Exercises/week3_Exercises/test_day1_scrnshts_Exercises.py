@@ -1,3 +1,4 @@
+
 from playwright.sync_api import sync_playwright
 
 URL = "https://demo.playwright.dev/todomvc"
@@ -13,7 +14,7 @@ with sync_playwright() as p:
         page.wait_for_load_state("networkidle")
         page.wait_for_timeout(3000)
 
-        screenshot_path = f"screenshot_{browser_name}.png"
+        screenshot_path = f"screenshots/{browser_name}.png"
         page.screenshot(path=screenshot_path)
         print(f"Saved {screenshot_path}")
         browser.close()

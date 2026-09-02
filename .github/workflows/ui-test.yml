@@ -28,8 +28,8 @@ jobs:
          pip install -r requirements.txt
 
       #4. Install Playwright browsers + required OS-level libraries
-      - name: Ensure browsers are installed
-        run: python -m playwright install --with-deps
+      # name: Ensure browsers are installed
+      # run: python -m playwright install --with-deps
 
       #5. Run test suite, generate a self-contained HTML report
       - name: Run tests
