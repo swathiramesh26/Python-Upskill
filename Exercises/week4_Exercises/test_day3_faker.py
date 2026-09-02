@@ -4,5 +4,5 @@ def test_dynamic_todos(dynamic_todos):
 
 def test_static_todos(static_todos):
     print("\nStatic todos:", static_todos)
-    assert len(static_todos) == 5
+    assert len(static_todos) == 6
     assert "Shopping" in static_todos
