@@ -1,8 +1,8 @@
 from playwright.sync_api import Page, expect
-from config import BASE_URL
+from config import BASE_URL_MVC
 
 class TodoPage:
-    URL = BASE_URL
+    URL = BASE_URL_MVC
 
     # ---------- Locator constants ----------
     NEW_TODO_INPUT = "input.new-todo"

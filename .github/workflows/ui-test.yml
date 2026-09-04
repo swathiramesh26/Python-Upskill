@@ -9,6 +9,12 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    env:
+      BASE_URL: https://www.saucedemo.com/
+      USERNAME: standard_user
+      PASSWORD: secret_sauce
+      BROWSER: chromium
+      HEADLESS: "true"
 
     steps:
       # 1. Pull repo's code on the runner

@@ -98,7 +98,7 @@ def browser_instance(playwright, browser_name):
     """Launches the actual browser matching browser_name,
     and cleans up after the test finishes."""
     browser_type = getattr(playwright, browser_name)
-    browser = browser_type.launch(headless=True)
+    browser = browser_type.launch(headless=False)
     yield browser
     browser.close()
 """Open tab in browser"""
@@ -110,3 +110,35 @@ def page(browser_instance):
     page = context.new_page()
     yield page
     context.close()
+
+#-------------Week 4------------#
+sys.path.insert(0, os.path.dirname(__file__))
+from config import HEADLESS
+
+fake = Faker()
+
+@pytest.fixture(params=["chromium", "firefox"])
+def browser_type_name(request):
+    return request.param
+
+@pytest.fixture
+def browser_instance(playwright, browser_type_name):
+    browser_type = getattr(playwright, browser_type_name)
+    browser = browser_type.launch(headless=HEADLESS)
+    yield browser
+    browser.close()
+
+@pytest.fixture
+def page(browser_instance):
+    context = browser_instance.new_context()
+    page = context.new_page()
+    yield page
+    context.close()
+
+@pytest.fixture
+def random_user():
+    return {
+        "first_name": fake.first_name(),
+        "last_name": fake.last_name(),
+        "zip_code": fake.postcode(),
+    }
