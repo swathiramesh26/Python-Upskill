@@ -10,6 +10,15 @@ import pytest
 import json
 from faker import Faker
 from pages.todo_page import TodoPage
+import requests
+import httpx
+from playwright.sync_api import Playwright
+from api.users_api import UsersAPI
+from config import BASE_URL_MVC, API_BASE_URL, API_TOKEN
+from utils.http import BaseURLSession
+
+
+#@pytest.fixture(params=["chromium", "firefox"])
 
 @pytest.fixture(scope="function")
 def cart():
@@ -113,7 +122,7 @@ def page(browser_instance):
 
 #-------------Week 4------------#
 sys.path.insert(0, os.path.dirname(__file__))
-from config import HEADLESS
+from config import HEADLESS, API_BASE_URL
 
 fake = Faker()
 
@@ -142,3 +151,68 @@ def random_user():
         "last_name": fake.last_name(),
         "zip_code": fake.postcode(),
     }
+#----------Week 5 Task3---------#
+@pytest.fixture()
+def api_base_url(request):
+    return API_BASE_URL
+
+@pytest.fixture(scope="session")
+def session():
+    """Reuse a single requests.Session for connection"""
+    s = requests.Session()
+    yield s
+    s.close()
+
+#--------Week 5 Task4---------#
+
+# @pytest.fixture
+# def auth_headers():
+#     """Headers with a valid Bearer token."""
+#     return {"Authorization": f"Bearer {VALID_TOKEN}"}
+#
+# @pytest.fixture
+# def no_auth_headers():
+#     """Headers with no Authorization key at all."""
+#     return {}
+#
+# @pytest.fixture(params=[
+#     "", "Bearer", "expired_token",
+# ])
+# def invalid_auth_headers(request):
+#     """Headers with various invalid Bearer tokens."""
+#     return {"Authorization": f"Bearer {request.param}"}
+
+@pytest.fixture
+def users_api(api_request_context):
+    return UsersAPI(api_request_context)
+
+#--------Week 5 Task5---------#
+
+@pytest.fixture(scope="session")
+def client():
+    """Reuse a single httpx.Client for connection similar to requests.Session """
+    with httpx.Client(base_url=API_BASE_URL, timeout=10.0) as c:
+        yield c
+
+#---------Test UI via api------#
+@pytest.fixture(scope="session")
+def api_request_context(playwright: Playwright):
+    """A Playwright APIRequestContext for making direct HTTP calls,
+    independent of any browser/page."""
+    context = playwright.request.new_context(base_url=API_BASE_URL)
+    yield context
+    context.dispose()
+
+#-------Week 5 Asgmt------#
+@pytest.fixture(scope="session")
+def session():
+    """
+    requests.Session pre-configured with base_url (so tests use relative
+    paths like `session.get("/users")`) and, if API_TOKEN is set, an
+    x-api-key header on every request.
+    """
+    s = BaseURLSession(API_BASE_URL)
+    if API_TOKEN:
+        s.headers.update({"x-api-key": API_TOKEN})
+    yield s
+    s.close()
