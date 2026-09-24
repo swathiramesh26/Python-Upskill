@@ -8,6 +8,7 @@ import os
 from dotenv import load_dotenv
 
 
+
 # # def _str_to_bool(value: str) -> bool:
 # #     return value.strip().lower() in ("1", "true", "yes", "on")
 #
@@ -26,3 +27,7 @@ if __name__ == "__main__":
 BASE_URL_SAUCE= os.getenv("BASE_URL_SAUCE")
 USERNAME = os.getenv("USERNAME")
 PASSWORD = os.getenv("PASSWORD")
+
+#api Week5 Task2 and 4
+API_BASE_URL= os.getenv("API_BASE_URL")
+API_TOKEN = os.getenv("API_TOKEN")
