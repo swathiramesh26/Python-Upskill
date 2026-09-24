@@ -31,3 +31,4 @@ PASSWORD = os.getenv("PASSWORD")
 #api Week5 Task2 and 4
 API_BASE_URL= os.getenv("API_BASE_URL")
 API_TOKEN = os.getenv("API_TOKEN")
+API_TOKEN_TEST= os.getenv("API_TOKEN_TEST")

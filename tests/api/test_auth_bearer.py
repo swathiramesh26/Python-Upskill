@@ -1,13 +1,13 @@
-from config import API_TOKEN
+#Tests that pass a Bearer token in headers;
+#add negative tests asserting 401 when token is missing or invalid
 
 # NOTE: swap this for a token your test environment actually issues/accepts.
 # Keeping it in one place makes it easy to point at a real fixture/user later.
-API_TOKEN = "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"
 
-
+from config import API_TOKEN_TEST
 def test_get_users_with_valid_token(users_api):
     """A well-formed, currently-valid token should succeed."""
-    headers = {"Authorization": f"Bearer {API_TOKEN}"}
+    headers = {"Authorization": f"Bearer {API_TOKEN_TEST}"}
     response = users_api.get_users(headers=headers)
     assert response.status in [200, 401]
 

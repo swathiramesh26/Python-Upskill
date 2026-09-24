@@ -1,3 +1,5 @@
+#Add JSON schema validation to all response tests;
+#assert required keys, data types, and response time under 2 seconds
 # GET /api/users
 import re
 from jsonschema import validate

@@ -1,5 +1,6 @@
 from config import API_BASE_URL
-
+#Rewrite 3 requests tests using httpx; use playwright.
+#request in a UI test to set up data via API before the browser step
 MAX_RESPONSE_TIME = 2.0  # in seconds
 
 class TestUsersHttpx:

@@ -1,4 +1,5 @@
-#T2
+# pytest tests for GET /users, POST /users, PUT /users/{id},
+#DELETE /users/{id} — assert status codes and response bodies
 # Pytest api tests for reqres. in — / api / users endpoints.
 
 # Covers:
