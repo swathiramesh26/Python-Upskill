@@ -14,8 +14,8 @@ import requests
 import httpx
 from playwright.sync_api import Playwright
 from api.users_api import UsersAPI
-from config import BASE_URL_MVC, API_BASE_URL, API_TOKEN
 from utils.http import BaseURLSession
+
 
 
 #@pytest.fixture(params=["chromium", "firefox"])
