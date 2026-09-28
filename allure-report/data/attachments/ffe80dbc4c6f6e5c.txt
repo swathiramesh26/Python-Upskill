@@ -1,0 +1,1 @@
+[SESSION] Teardown - closing library database connection
