@@ -15,6 +15,7 @@ import httpx
 from playwright.sync_api import Playwright
 from api.users_api import UsersAPI
 from utils.http import BaseURLSession
+from config import HEADLESS, API_BASE_URL, API_TOKEN_TEST, API_TESTER_URL, UI_TESTER_URL
 
 
 
@@ -122,7 +123,6 @@ def page(browser_instance):
 
 #-------------Week 4------------#
 sys.path.insert(0, os.path.dirname(__file__))
-from config import HEADLESS, API_BASE_URL
 
 fake = Faker()
 
@@ -152,16 +152,16 @@ def random_user():
         "zip_code": fake.postcode(),
     }
 #----------Week 5 Task3---------#
-@pytest.fixture()
-def api_base_url(request):
-    return API_BASE_URL
-
-@pytest.fixture(scope="session")
-def session():
-    """Reuse a single requests.Session for connection"""
-    s = requests.Session()
-    yield s
-    s.close()
+# @pytest.fixture(scope="session")
+# def api_base_url():
+#     return API_BASE_URL
+#
+# @pytest.fixture(scope="session")
+# def session():
+#     """Reuse a single requests.Session for connection"""
+#     s = requests.Session()
+#     yield s
+#     s.close()
 
 #--------Week 5 Task4---------#
 
@@ -204,15 +204,103 @@ def api_request_context(playwright: Playwright):
     context.dispose()
 
 #-------Week 5 Asgmt------#
+# @pytest.fixture(scope="session")
+# def session():
+#     """
+#     requests.Session pre-configured with base_url (so tests use relative
+#     paths like `session.get("/users")`) and, if API_TOKEN is set, an
+#     x-api-key header on every request.
+#     """
+#     s = BaseURLSession(API_BASE_URL)
+#     if API_TOKEN_TEST:
+#         s.headers.update({"x-api-key": API_TOKEN_TEST})
+#     yield s
+#     s.close()
+
+#-------Week 5 Asgmt------#
+# For Week 6 Ex3 code update
+#-------Shared session-scoped fixtures------#
+
 @pytest.fixture(scope="session")
-def session():
+def api_base_url():
+    return API_BASE_URL
+
+
+@pytest.fixture(scope="session")
+def auth_token():
+    """The auth token, read once and shared by every test that needs it."""
+    return API_TOKEN_TEST
+
+
+@pytest.fixture(scope="session")
+def session(api_base_url):
     """
-    requests.Session pre-configured with base_url (so tests use relative
-    paths like `session.get("/users")`) and, if API_TOKEN is set, an
-    x-api-key header on every request.
+    Client for reqres.in's DEMO endpoints (/api/users, /api/login), which
+    require no authentication. No x-api-key here.
     """
-    s = BaseURLSession(API_BASE_URL)
-    if API_TOKEN:
-        s.headers.update({"x-api-key": API_TOKEN})
+    s = BaseURLSession(api_base_url)
     yield s
     s.close()
+
+
+@pytest.fixture(scope="session")
+def auth_session(api_base_url, auth_token):
+    """Client for the Project API (/api/collections/...), which requires a real key."""
+    s = BaseURLSession(api_base_url)
+    if auth_token:
+        s.headers.update({"x-api-key": auth_token})
+    yield s
+    s.close()
+
+#--- WEEK 6 T4: 5 UI tests + 5 API for thinking tester url- allure annotations and CI pipeline-----#
+fake = Faker()
+@pytest.fixture(scope="session")
+def api_tester_url():
+        return API_TESTER_URL
+
+@pytest.fixture(scope="session")
+def ui_tester_url():
+        return UI_TESTER_URL
+
+@pytest.fixture
+def api_session(api_tester_url):
+    """Plain requests.Session, reused for connection pooling within a test."""
+    s = requests.Session()
+    yield s
+    s.close()
+
+@pytest.fixture
+def new_user():
+    """A unique user for signup tests -- unique email generated - Unique identifier generated"""
+    uid = fake.uuid4()
+    return {
+        "firstName": fake.first_name(),
+        "lastName": fake.last_name(),
+        "email": f"{uid[:8]}@example.com", #Unique email wrt uid
+        "password": "TestPass123!",
+    }
+
+@pytest.fixture
+def registered_user(api_session, api_tester_url, new_user):
+    response = api_session.post(f"{api_tester_url}/users", json=new_user)
+    assert response.status_code == 201, (
+        f"Setup failed: could not create user via API: "
+        f"{response.status_code} {response.text}"
+    )
+    body = response.json()
+    return {
+        **new_user,
+        "token": body["token"],
+        "id": body["user"]["_id"],
+    }
+
+@pytest.fixture
+def new_contact():
+    """A fresh contact to create in add-contact tests."""
+    return {
+        "firstName": fake.first_name(),
+        "lastName": fake.last_name(),
+        "email": fake.email(),
+        "phone": fake.numerify("##########"),
+    }
+

@@ -17,16 +17,15 @@ class TestGetUsers:
     def test_get_users_response_body_structure(self, session):
         response = session.get(f"{API_BASE_URL}/users", params={"page": 2})
         body = response.json()
-
+        print(body)
         validate(instance=body, schema=GET_USERS_LIST_SCHEMA)
         assert body["page"] == 2
         assert len(body["data"]) > 0
         assert response.elapsed.total_seconds() < MAX_RESPONSE_TIME
 
-    def test_get_users_data_item_shape(self, session):
+    def test_get_users_data_item_format(self, session):
         response = session.get(f"{API_BASE_URL}/users", params={"page": 2})
         body = response.json()
-
         # schema already checks required keys + types for every item in "data",
         # these extra asserts spot-check the first item's format specifically
         validate(instance=body, schema=GET_USERS_LIST_SCHEMA)
@@ -38,7 +37,6 @@ class TestGetUsers:
     def test_get_single_user_found(self, session):
         response = session.get(f"{API_BASE_URL}/users/2")
         body = response.json()
-
         assert response.status_code == 200
         validate(instance=body, schema=GET_SINGLE_USER_SCHEMA)
         assert body["data"]["id"] == 2
@@ -57,7 +55,6 @@ class TestCreateUser:
         payload = {"name": "morpheus", "job": "leader"}
         response = session.post(f"{API_BASE_URL}/users", json=payload)
         body = response.json()
-
         assert response.status_code == 201
         validate(instance=body, schema=CREATE_USER_SCHEMA)
         assert body["name"] == payload["name"]
@@ -70,7 +67,6 @@ class TestUpdateUser:
         payload = {"name": "morpheus", "job": "Zion resident"}
         response = session.put(f"{API_BASE_URL}/users/2", json=payload)
         body = response.json()
-
         assert response.status_code == 200
         validate(instance=body, schema=UPDATE_USER_SCHEMA)
         assert body["job"] == payload["job"]
@@ -80,7 +76,6 @@ class TestUpdateUser:
 class TestDeleteUser:
     def test_delete_user(self, session):
         response = session.delete(f"{API_BASE_URL}/users/2")
-
         assert response.status_code == 204
         assert response.text == ""
         assert response.elapsed.total_seconds() < MAX_RESPONSE_TIME

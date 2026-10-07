@@ -9,12 +9,16 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+
     env:
+      API_TESTER_URL: https://thinking-tester-contact-list.herokuapp.com
+      UI_TESTER_URL: https://thinking-tester-contact-list.herokuapp.com
       BASE_URL: https://www.saucedemo.com/
       USERNAME: standard_user
       PASSWORD: secret_sauce
       BROWSER: chromium
       HEADLESS: "true"
+      API_TOKEN_TEST: ${{secrets.API_TOKEN_TEST}}
 
     steps:
       # 1. Pull repo's code on the runner
@@ -37,13 +41,14 @@ jobs:
       # name: Ensure browsers are installed
       # run: python -m playwright install --with-deps
 
-      #5. Run test suite, generate a self-contained HTML report
+      #5. Run test suite, generate a self-contained HTML report and allure
       - name: Run tests
         run: |
          pytest tests/ -v \
           --browser chromium \
           --html=report.html \
           --self-contained-html
+          --alluredir=allure-results
         continue-on-error: true   # let the workflow proceed to upload the report even if tests fail
         
         # 6. Upload the HTML report as a downloadable artifact
@@ -54,3 +59,12 @@ jobs:
            name: html-report
            path: report.html
            retention-days: 14
+
+        # 7. Upload raw Allure results as a downloadable artifact
+      - name: Upload Allure results
+        if: always()   # upload the report whether tests passed or failed
+        uses: actions/upload-artifact@v4
+        with:
+            name: allure-results
+            path: allure-results
+            retention-days: 14
