@@ -32,3 +32,7 @@ PASSWORD = os.getenv("PASSWORD")
 API_BASE_URL= os.getenv("API_BASE_URL")
 API_TOKEN_TEST= os.getenv("API_TOKEN_TEST")
 print(f"API_TOKEN_TEST = {API_TOKEN_TEST}")
+
+# Week 6: 5 UI tests + 5 API tests for https://thinking-tester-contact-list.herokuapp.com
+API_TESTER_URL = os.getenv("API_TESTER_URL")
+UI_TESTER_URL = os.getenv("UI_TESTER_URL")

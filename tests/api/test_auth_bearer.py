@@ -9,7 +9,7 @@ def test_get_users_with_valid_token(users_api):
     """A well-formed, currently-valid token should succeed."""
     headers = {"Authorization": f"Bearer {API_TOKEN_TEST}"}
     response = users_api.get_users(headers=headers)
-    assert response.status in [200, 401]
+    assert response.status in [200]
 
 def test_get_users_without_token(users_api):
     """No Authorization header at all -> 401."""

@@ -1,0 +1,21 @@
+URL after submit: https://thinking-tester-contact-list.herokuapp.com/addContact
+Page content: Add Contact
+Logout
+
+* First Name:  * Last Name: 
+
+Date of Birth: 
+
+Email:  Phone: 
+
+Street Address 1: 
+
+Street Address 2: 
+
+City:  State or Province: 
+
+Postal Code:  Country: 
+
+Submit Cancel
+
+Created by Kristin Jackvony, Copyright 2021

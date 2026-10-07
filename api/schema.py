@@ -71,3 +71,44 @@ UPDATE_USER_SCHEMA = {
         "updatedAt": {"type": "string"},
     },
 }
+
+USER_AUTH_SCHEMA = {
+    "title": "UserAuthResponse",
+    "type": "object",
+    "properties": {
+        "user": {
+            "type": "object",
+            "properties": {
+                "_id": {"type": "string"},
+                "firstName": {"type": "string"},
+                "lastName": {"type": "string"},
+                "email": {"type": "string"},
+            },
+            "required": ["_id", "email"],
+            "additionalProperties": True,
+        },
+        "token": {"type": "string"},
+    },
+    "required": ["user", "token"],
+    "additionalProperties": True,
+}
+
+CONTACT_SCHEMA = {
+    "title": "Contact",
+    "type": "object",
+    "properties": {
+        "_id": {"type": "string"},
+        "firstName": {"type": "string"},
+        "lastName": {"type": "string"},
+        "email": {"type": "string"},
+        "phone": {"type": "string"},
+    },
+    "required": ["_id", "firstName", "lastName"],
+    "additionalProperties": True,
+}
+
+CONTACTS_LIST_SCHEMA = {
+    "title": "ContactsList",
+    "type": "array",
+    "items": CONTACT_SCHEMA,
+}
